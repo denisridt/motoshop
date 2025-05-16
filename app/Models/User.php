@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\Http\Middleware\Authenticate;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -12,11 +12,12 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Hash;
 use Laravel\Sanctum\HasApiTokens;
 
-class User extends Authenticate
+class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 
     //Атрибуты, которые можно массово назначать.
+    protected $table = 'users';
     protected $fillable = [
         'name',
         'email',

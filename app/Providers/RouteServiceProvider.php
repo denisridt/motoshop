@@ -34,9 +34,9 @@ class RouteServiceProvider extends ServiceProvider
 
         // Определение маршрутов для приложения
         $this->routes(function () {
-            // Группа маршрутов API с префиксом 'api-mods'
+            // Группа маршрутов API с префиксом 'api'
             Route::middleware('api')
-                ->prefix('api-mods')
+                ->prefix('api')
                 ->group(base_path('routes/api.php'));
 
             // Группа маршрутов для веб-приложения

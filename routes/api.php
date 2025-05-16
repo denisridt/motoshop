@@ -7,17 +7,9 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\CartController;
 use Laravel\Sanctum\PersonalAccessToken;
+use App\Http\Controllers\AuthUserController;
+use App\Http\Controllers\SearchController;
 
-/*
-|--------------------------------------------------------------------------
-| API Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register API routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "api" middleware group. Make something great!
-|
-*/
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
@@ -54,3 +46,20 @@ Route::controller(CartController::class)->group(function () {
 //API-TOKEN
 Route::post('/personal-access-tokens', [PersonalAccessToken::class, 'store'])->middleware('auth:sanctum');
 Route::delete('/personal-access-tokens/{tokenId}', [PersonalAccessToken::class, 'delete'])->middleware('auth:sanctum');
+
+
+//Регистрация
+Route::post('/register', [AuthUserController::class, 'store'])->middleware('guest');
+
+//Авторизация
+Route::post('/login', [AuthUserController::class, 'login']);
+
+//Деавторизация
+Route::delete('/logout', [AuthUserController::class, 'logout'])->middleware('auth');
+
+//Поисковая строка
+Route::get('/search', [SearchController::class, 'search'])->name('search');
+
+Route::get('/test', function () {
+    return response()->json(['message' => 'Hello from Laravel API!']);
+});

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Exceptions\ApiException;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -60,18 +61,15 @@ class AuthUserController extends Controller
         return response()->json(['error' => 'Пользователь не существует. Неверный логин или пароль'], 401);
     }
 
-    public function logout(Request $request)
-    {
-        // Выход пользователя из системы
-        Auth::logout();
-
-        // Инвалидация текущей сессии пользователя
-        $request->session()->invalidate();
-
-        // Перегенерация токена сессии пользователя
-        $request->session()->regenerateToken();
-
-        // Возвращение ответа без содержимого (204 No Content)
-        return response()->json(['message' => 'Выход из учетной записи'], 200);
+    public function logout(Request $request) {
+        $user = $request->user();
+        if (!$user) throw new ApiException(401, 'Ошибка аутентификации');
+        $user->api_token = null;
+        $user->save();
+        return response([
+            'data' => [
+                'message' => 'Вы вышли из системы',
+            ],
+        ]);
     }
 }
