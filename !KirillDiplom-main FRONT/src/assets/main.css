@@ -1,0 +1,56 @@
+np@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 100 900;
+  src: url(https://fonts.gstatic.com/s/inter/v13/UcC73FwrK3iLTeHuS_fvQtMwCp50KnMa2JL7SUc.woff2) format('woff2');
+  unicode-range: U+0460-052F, U+1C80-1C88, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+}
+
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type=number] {
+  -moz-appearance:textfield;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--Button);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar {
+  position: absolute;
+  left: 0;
+  width: 4px;
+}
+*, :after, :before {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  color: black;
+  border: none;
+  outline: none;
+  text-decoration: none;
+  list-style: none;
+  font-family: "Inter", sans-serif;
+}
+:root {
+  --Dash-Board: #3cb371;
+  --Main-Background: #212123;
+  --Button:#3cb371;
+  --Card:#29292B;
+  --Rectangle7:#363638;
+  --Title-h2:#6F7579;
+  --Icon:#737A85;
+  --Text:#C0C0C0;
+  --Title-h1:#FEFFFF;
+  --Text-active:#9AB7C8;
+  --Stroke:#5C656C;
+}
+body{
+  height: 100%;
+  background:  var(--Main-Background);
+}
