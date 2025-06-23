@@ -3,7 +3,7 @@
 use App\Http\Controllers\SearchController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthUserController;
-Route::view('/', 'index');
+
 
 //Регистрация
 Route::post('/register', [AuthUserController::class, 'store'])->middleware('guest');

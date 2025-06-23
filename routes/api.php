@@ -52,14 +52,10 @@ Route::delete('/personal-access-tokens/{tokenId}', [PersonalAccessToken::class, 
 Route::post('/register', [AuthUserController::class, 'store'])->middleware('guest');
 
 //Авторизация
-Route::post('/login', [AuthUserController::class, 'login']);
+Route::post('/login', [AuthUserController::class, 'login'])->name('login');
 
 //Деавторизация
-Route::delete('/logout', [AuthUserController::class, 'logout'])->middleware('auth');
-
+Route::middleware('auth:sanctum')->delete('/logout', [AuthUserController::class, 'logout']);
 //Поисковая строка
 Route::get('/search', [SearchController::class, 'search'])->name('search');
 
-Route::get('/test', function () {
-    return response()->json(['message' => 'Hello from Laravel API!']);
-});

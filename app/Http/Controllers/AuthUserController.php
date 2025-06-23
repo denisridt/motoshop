@@ -13,26 +13,28 @@ class AuthUserController extends Controller
     public function store(Request $request)
     {
         // Валидация данных запроса
-        $request->validate([
+        $validated = $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'login' => ['required', 'string', 'max:255', 'unique:'.User::class],
-            'email' => ['required', 'string', 'email', 'unique:'.User::class],
-            'password' => ['required', 'string','confirmed', Password::defaults()],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:'.User::class],
+            'password' => ['required', 'string', 'confirmed', Password::defaults()],
         ]);
 
         // Создание нового пользователя
         $user = User::create([
-            'name' => $request->name,
-            'login' => $request->login,
-            'email' => $request->email,
-            'password' => $request->password,
+            'name' => $validated['name'],
+            'login' => $validated['login'],
+            'email' => $validated['email'],
+            'password' => bcrypt($validated['password']),
         ]);
 
         // Авторизация пользователя
         Auth::login($user);
 
-        // Возвращение ответа с информацией о пользователе
-        return response($user);
+        return response()->json([
+            'message' => 'Пользователь успешно зарегистрирован',
+            'user' => $user->only(['id', 'name', 'email', 'login'])
+        ], 201);
     }
 
     public function login(Request $request)
@@ -61,15 +63,13 @@ class AuthUserController extends Controller
         return response()->json(['error' => 'Пользователь не существует. Неверный логин или пароль'], 401);
     }
 
-    public function logout(Request $request) {
-        $user = $request->user();
-        if (!$user) throw new ApiException(401, 'Ошибка аутентификации');
-        $user->api_token = null;
-        $user->save();
-        return response([
-            'data' => [
-                'message' => 'Вы вышли из системы',
-            ],
+    public function logout(Request $request)
+    {
+        // Удаление текущего токена пользователя
+        $request->user()->currentAccessToken()->delete();
+
+        return response()->json([
+            'message' => 'Успешный выход из системы'
         ]);
     }
 }

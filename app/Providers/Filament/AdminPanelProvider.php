@@ -35,8 +35,8 @@ class AdminPanelProvider extends PanelProvider
             ->colors([ // Настройка цветовой схемы панели
                 'primary' => Color::Amber,
             ])
-            ->favicon(asset('images/logo.png')) // Путь к иконке favicon
-            ->brandLogo(asset('images/logo.png')) // Путь к логотипу
+            ->favicon(asset('images/logo.jpg')) // Путь к иконке favicon
+            ->brandLogo(asset('images/logo.jpg')) // Путь к логотипу
             ->brandName(asset('MotoShop')) // Название бренда
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources') // Обнаружение ресурсов Filament
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages') // Обнаружение страниц Filament
